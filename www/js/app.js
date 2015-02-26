@@ -2,8 +2,8 @@ var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "O
 var months2 = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 $("#seasonSlider").dateRangeSlider({
-	bounds: {min: new Date(2012, 2, 1), max: new Date(2012, 9, 31, 12, 59, 59)},
-	defaultValues: {min: new Date(2012, 5, 1), max: new Date(2012, 7, 31)},
+	bounds: {min: new Date(2004, 2, 1), max: new Date(2004, 9, 31, 12, 59, 59)},
+	defaultValues: {min: new Date(2004, 5, 1), max: new Date(2004, 7, 31)},
 	formatter: function(val) {
 		var days = val.getDate(),
 			month = val.getMonth();
@@ -45,6 +45,25 @@ $.extend(dateSliderBinding, {
 });
 Shiny.inputBindings.register(dateSliderBinding);
 
+$("#calcSeason").on("click", function() {
+	$("#calcSeason").button('loading');
+})
+
+Shiny.addCustomMessageHandler("optimalSeason", function(data) {
+	$("#seasonSlider").dateRangeSlider("values", new Date(data.startDate*1000), new Date(data.endDate * 1000));
+	$("#calcSeason").button('reset');
+})
+
+// TOOLTIPS //
+
+
+	Shiny.addCustomMessageHandler("tableTooltips", function(data) {
+		window.setTimeout(function() {
+			$("#tableOutput td:nth-child(2)").tooltip({title: "In-Season Exceedances/In-Season Readings (Percent)", container: "body", placement: "right"})
+			$("#tableOutput td:nth-child(3)").tooltip({title: "Captured Exceedances/Total Exceedances (Percent)", container: "body", placement: "right"})
+		}, 500)
+	})
+	
 // MAP STUFF //
 
 var bounds = L.latLngBounds([30, -89], [49, -70])
@@ -120,8 +139,20 @@ Shiny.addCustomMessageHandler("percentUpdate", function(data) {
       layer.feature.properties.percent = perc;
     }
     layer.setStyle({fillColor: setColor(layer)})
+	po = "<table class = 'popup-table'><tr><td colspan = '2'>" + layer.feature.properties.NAME + "</td></tr>"
+	po = po + 	"<tr><td>In-Season Exceedances</td><td>" + data.EXCEED[i] + "</td></tr>"
+	po = po + 	"<tr><td>In-Season Readings</td><td>" + data.TOTAL[i] + "</td></tr>"
+	po = po + 	"<tr><td>Total Exceedances</td><td>" + data.EXCEED_ALL[i] + "</td></tr>"
+	po = po + 	"<tr><td>Exceedance Capture</td><td>" + perc + "%</td></tr>"
+	po = po +   "</table";
+	
+	layer.bindPopup(po, {maxWidth: 500});
+	layer.on("popupclose", function() {
+		resizeMap()
+	})
   })
 })
+
 // LEGEND //
 
 var legend = L.control({position: 'bottomright'});
@@ -131,7 +162,7 @@ legend.onAdd = function(map) {
   var div = L.DomUtil.create('div', 'info legend'),
       grades = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90],
       labels = [];
-  div.innerHTML = "<span class = 'legend-title'>Exceedences<br />Captured (%)</span><br />";    
+  div.innerHTML = "<span class = 'legend-title'>Exceedances<br />Captured (%)</span><br />";    
   for(var i = 0; i < grades.length; i++) {
     div.innerHTML +=
         '<i style="background:' + setColor(grades[i]) + '"></i><span id = "legend_' + grades[i] + '">' +

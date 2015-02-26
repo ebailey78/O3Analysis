@@ -32,3 +32,48 @@ body {
     margin-right: 8px;
     opacity: 0.4;
 }
+
+.tooltip-inner {
+    max-width: 500px !important;
+}
+
+#tableOutput td {
+	text-align: right;
+}
+
+#tableOutput th {
+	text-align: center;
+}
+
+#tableOutput tr:last-child td {
+	font-weight: bold;
+}
+
+.popup-table {
+	font-size: 12px;
+}
+
+.popup-table td {
+	text-align: right;
+	border-bottom: solid 1px #CCC;
+	padding-top 4px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.popup-table td:first-child {
+	padding-right: 10px;
+	border-right: solid 1px #CCC;
+	white-space: nowrap;
+}
+
+.popup-table td:last-child {
+	padding-left: 10px;
+}
+
+.popup-table tr:first-child td {
+	text-align: center;
+	font-weight: bold;
+	border-right: none;
+}
