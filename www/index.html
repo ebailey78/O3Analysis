@@ -1,0 +1,89 @@
+<html>
+
+	<head>
+		<title>Ozone Exceedence Analysis</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<link type = "text/css" rel = "stylesheet" href = "shared/shiny.css" />
+		<link href = "shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+		<link type = "text/css" rel = "stylesheet" href = "css/jquery-ui.css" />
+		<link type = "text/css" rel = "stylesheet" href = "css/iThing.css" />
+		<link type = "text/css" rel = "stylesheet" href = "css/leaflet.css" />
+		<link type = "text/css" rel = "stylesheet" href = "css/app.css" />
+		
+		<script src = "shared/jquery.js" type="text/javascript"></script>
+		<script src = "js/jquery-ui.js" type = "text/javascript"></script>
+		<script src = "js/jQAllRangeSliders-withRuler-min.js" type = "text/javascript"></script>
+		<script src = "js/leaflet.js" type = "text/javascript"></script>
+		<script src = "js/esri-leaflet.js" type = "text/javascript"></script>
+		
+		<script src = "shared/shiny.js" type="text/javascript"></script>
+		<script src = "shared/bootstrap/js/bootstrap.min.js"></script>
+		<script src = "shared/bootstrap/shim/html5shiv.min.js"></script>
+		<script src = "shared/bootstrap/shim/respond.min.js"></script>
+		
+		<link href="shared/ionrangeslider/css/normalize.css" rel="stylesheet" />
+		<link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
+		<link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+		<script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+		
+	</head>
+	
+	<body>
+	
+		<div class = "container">
+			<div class = "row">
+				<div class = "col-md-7">
+					<div role = "tabpanel">
+						<ul class = "nav nav-tabs nav-justified" role = "tablist">
+							<li role = "presentation" class = "active"><a id = "mapTab" href = "#mapView" role = "tab" data-toggle = "tab">Map</a></li>
+							<li role = "presentation"><a href = "#tableView" role = "tab" data-toggle = "tab">Table</a></li>
+							<li role = "presentation"><a href = "#graphView" role = "tab" data-toggle = "tab">Graph</a></li>
+						</ul>
+						
+						<div class = "tab-content">
+							<div role = "tabpanel" class = "tab-pane active" id = "mapView">
+								<div id = "map"></div>
+							</div>
+							<div role = "tabpanel" class = "tab-pane" id = "tableView">
+								<div id = "tableOutput" class = "shiny-html-output"></div>
+							</div>
+							<div role = "tabpanel" class = "tab-pane" id = "graphView">
+								<div id = "graphOutput" class = "shiny-plot-output"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class = "col-md-5">
+					<label class="control-label" for="seasonSlider">Control Season</label>
+					<div id = "seasonSlider" class = "shiny-daterange-slider"></div>
+					<div class="form-group shiny-input-container" style = "width: 100%">
+						<label class="control-label" for="yearSlider">Years Included</label>
+						<input class="js-range-slider" id="yearSlider" data-type="double" data-min="2004" data-max="2014" data-from="2004" data-to="2014" data-step="1" data-grid="false" data-grid-snap="false" data-prettify-separator="" data-keyboard="true" data-keyboard-step="10"/>
+					</div>	
+				    <label class="control-label" for="ozoneStandard">Ozone Standard</label>
+					<div id="ozoneStandard" class="btn-group btn-group-justified shiny-input-radiogroup" data-toggle = "buttons">
+						<label class = "btn btn-default">
+							<input type="radio" name="ozoneStandard" id="ozoneStandard1" value="65" />
+							<span>65ppb</span>
+						</label>
+						<label class = "btn btn-default">
+							<input type="radio" name="ozoneStandard" id="ozoneStandard2" value="70" />
+							<span>70ppb</span>
+						</label>
+						<label class = "btn btn-default active">
+							<input type="radio" name="ozoneStandard" id="ozoneStandard3" value="75" checked="checked" />
+							<span>75ppb</span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	
+	</body>
+	
+	<script src = "js/app.js"></script>
+	
+</html>
+ 
